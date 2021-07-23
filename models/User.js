@@ -21,9 +21,19 @@ const UserSchema = new Schema(
       }
   ],
   friends: []
-}
+},
+{
+    toJSON: {
+      virtuals: true,
+    },
+    id: false
+  }
 );
 
+// get total count of thoughts and reactions on retrieval
+UserSchema.virtual('thoughtCount').get(function() {
+    return this.thoughts.length;
+  });
 
 // create the User model using the PizzaSchema
 const User = model('User', UserSchema);
